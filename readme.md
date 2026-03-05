@@ -221,7 +221,7 @@ flink run -c org.apache.flink.cdc.cli.CliFrontend \
   /path/to/external/pipeline.yaml
 ```
 
-The `CliFrontend` will first look for the file in the JAR's resources, then fall back to the filesystem path.
+The `CliFrontend` will first look for the file in the filesystem path without jar's file .
 
 ---
 
