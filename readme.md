@@ -99,7 +99,10 @@ Application dir files like
 
 ```bash1
 # Submit to local cluster
-
+flink run \
+  -c org.apache.flink.cdc.cli.CliFrontend \
+  my-cdc-pipeline-1.0-SNAPSHOT.jar \
+  pipeline.yaml
 
 # Submit to remote cluster
 flink run \
