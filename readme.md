@@ -89,7 +89,7 @@ This creates `target/my-cdc-pipeline-1.0-SNAPSHOT.jar`.
 
 Application dir files like 
 ```
-/
+
 ├── my-cdc-pipeline-1.0-SNAPSHOT.jar
 ├── pipeline.yaml
 
@@ -189,22 +189,23 @@ You can package multiple YAML files and choose which one to run:
 ```
 my-cdc-pipeline/
 ├── pom.xml
-└── src/main/resources/
-    ├── pipeline-dev.yaml
-    ├── pipeline-staging.yaml
-    └── pipeline-prod.yaml
+
+The same dir with java applition 
+├── pipeline-dev.yaml
+├── pipeline-staging.yaml
+└── pipeline-prod.yaml
 ```
 
 **Submit specific pipeline:**
 ```bash
 # Development
 flink run -c org.apache.flink.cdc.cli.CliFrontend \
-  target/my-cdc-pipeline-1.0-SNAPSHOT.jar \
+  my-cdc-pipeline-1.0-SNAPSHOT.jar \
   pipeline-dev.yaml
 
 # Production
 flink run -c org.apache.flink.cdc.cli.CliFrontend \
-  target/my-cdc-pipeline-1.0-SNAPSHOT.jar \
+  my-cdc-pipeline-1.0-SNAPSHOT.jar \
   pipeline-prod.yaml
 ```
 
@@ -216,7 +217,7 @@ If you prefer to keep YAML outside the JAR:
 
 ```bash
 flink run -c org.apache.flink.cdc.cli.CliFrontend \
-  target/my-cdc-pipeline-1.0-SNAPSHOT.jar \
+  my-cdc-pipeline-1.0-SNAPSHOT.jar \
   /path/to/external/pipeline.yaml
 ```
 
@@ -233,7 +234,7 @@ flink run \
   -c org.apache.flink.cdc.cli.CliFrontend \
   -D execution.checkpointing.interval=60s \
   -D state.backend=rocksdb \
-  target/my-cdc-pipeline-1.0-SNAPSHOT.jar \
+  my-cdc-pipeline-1.0-SNAPSHOT.jar \
   pipeline.yaml
 ```
 
@@ -355,7 +356,7 @@ mvn clean package
 flink run \
   -m localhost:8081 \
   -c org.apache.flink.cdc.cli.CliFrontend \
-  target/mysql-to-kafka-cdc-1.0.0.jar \
+  mysql-to-kafka-cdc-1.0.0.jar \
   pipeline.yaml
 ```
 
@@ -365,7 +366,7 @@ flink run \
 
 JAR submission provides a standard, CI/CD-friendly way to deploy Flink CDC pipelines:
 
-1. **Create Maven project** with pipeline YAML in `yaml/`
+1. **Create Maven project** with pipeline YAML in the same with application dir
 2. **Add connector dependencies** for your source and sink
 3. **Configure Maven Shade plugin** with `CliFrontend` as main class
 4. **Build JAR** with `mvn clean package`
