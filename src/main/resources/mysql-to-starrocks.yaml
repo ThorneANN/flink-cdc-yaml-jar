@@ -1,0 +1,32 @@
+source:
+  type: mysql
+  hostname: localhost
+  port: 3306
+  username: root
+  password: 123456
+  tables: app_db.\.*
+  server-id: 5400-5404
+  server-time-zone: UTC
+
+route:
+  - source-table: app_db.\.*
+    sink-table: starrocks_test.<>
+    replace-symbol: <>
+    description: route all tables in app_db to starocks_test
+
+sink:
+  type: starrocks
+  name: StarRocks Sink
+  jdbc-url: jdbc:mysql://127.0.0.1:9030
+  load-url: 127.0.0.1:8080
+  username: root
+  password: ""
+  sink.buffer-flush.interval-ms:  3000
+  sink.properties.row_delimiter: \x02
+  sink.properties.column_separator: \x01
+  sink.properties.format: CSV
+  table.create.properties.replication_num: 1
+
+pipeline:
+  name: Sync MySQL Database to StarRocks
+  parallelism: 2
