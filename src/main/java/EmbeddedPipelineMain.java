@@ -25,7 +25,11 @@ public class EmbeddedPipelineMain {
             Path tmp = Files.createTempFile("flink-cdc-", ".yaml");
             tmp.toFile().deleteOnExit();
             try (OutputStream out = Files.newOutputStream(tmp)) {
-                in.transferTo(out);
+                byte[] buf = new byte[8192];
+                int len;
+                while ((len = in.read(buf)) != -1) {
+                    out.write(buf, 0, len);
+                }
             }
 
             // 替换第一个参数为临时文件路径，其余参数原样保留
